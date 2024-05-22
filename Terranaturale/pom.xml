@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>TFG</groupId>
-	<artifactId>Terranaturale</artifactId>
+	<artifactId>terranaturale</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Terranaturale</name>
 	<description>Demo project for Spring Boot</description>
