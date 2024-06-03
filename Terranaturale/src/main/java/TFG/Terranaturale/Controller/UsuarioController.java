@@ -4,6 +4,7 @@ import TFG.Terranaturale.Dto.UsuarioDTO;
 import TFG.Terranaturale.Model.Usuario;
 import TFG.Terranaturale.Service.UsuarioService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class UsuarioController {
     }
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<UsuarioDTO>> getAllUsuarios() {
         return usuarioService.getAllUsuarios();
     }

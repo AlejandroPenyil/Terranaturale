@@ -5,21 +5,23 @@ import TFG.Terranaturale.Model.Usuario;
 import TFG.Terranaturale.Repository.UsuarioRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository,ModelMapper modelMapper) {
+    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public ResponseEntity<List<UsuarioDTO>> getAllUsuarios() {
@@ -39,8 +41,28 @@ public class UsuarioService {
     }
 
     public ResponseEntity<UsuarioDTO> createOrUpdateUsuario(UsuarioDTO usuario) {
-        Usuario usuario1 = modelMapper.map(usuario, Usuario.class);
-        return ResponseEntity.ok().body(modelMapper.map(usuarioRepository.save(usuario1), UsuarioDTO.class));
+        Usuario usuarioEntity = modelMapper.map(usuario, Usuario.class);
+
+        // Verificar si la contraseña proporcionada ya está encriptada
+        if (!isPasswordEncrypted(usuario.getContraseña())) {
+            // Si la contraseña no está encriptada, encriptarla antes de guardarla
+            String encryptedPassword = passwordEncoder.encode(usuario.getContraseña());
+            usuarioEntity.setContraseña(encryptedPassword);
+        }
+
+        // Guardar el usuario en la base de datos
+        Usuario savedUsuario = usuarioRepository.save(usuarioEntity);
+
+        // Mapear y devolver la respuesta
+        UsuarioDTO usuarioDTO = modelMapper.map(savedUsuario, UsuarioDTO.class);
+        return ResponseEntity.ok().body(usuarioDTO);
+    }
+
+    private boolean isPasswordEncrypted(String password) {
+        // Puedes implementar tu propia lógica para verificar si la contraseña está encriptada
+        // Por ejemplo, verificar si comienza con un prefijo específico o si sigue un formato determinado
+        // En este ejemplo, asumimos que una contraseña encriptada comienza con "$2a$"
+        return password.startsWith("$2a$");
     }
 
     public void deleteUsuario(Integer id) {

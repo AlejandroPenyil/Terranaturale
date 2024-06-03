@@ -14,4 +14,5 @@ public class UsuarioDTO {
     private String rol;
     private String telefono;
     private String direccion;
+    private String userName;
 }
