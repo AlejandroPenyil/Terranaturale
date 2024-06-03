@@ -1,6 +1,6 @@
 package TFG.Terranaturale.Service;
 
-import TFG.Terranaturale.Dto.FacturaDto;
+import TFG.Terranaturale.Dto.FacturaDTO;
 import TFG.Terranaturale.Model.Factura;
 import TFG.Terranaturale.Repository.FacturaRepository;
 import org.modelmapper.ModelMapper;
@@ -20,11 +20,11 @@ public class FacturaService {
         this.mapper = mapper;
     }
 
-    public ResponseEntity<List<FacturaDto>> getFacturas() {
+    public ResponseEntity<List<FacturaDTO>> getFacturas() {
         List<Factura> facturas = facturaRepository.findAll();
-        List<FacturaDto> facturasDto = new ArrayList<>();
+        List<FacturaDTO> facturasDto = new ArrayList<>();
         for (Factura factura : facturas) {
-            FacturaDto facturaDto = mapper.map(factura, FacturaDto.class);
+            FacturaDTO facturaDto = mapper.map(factura, FacturaDTO.class);
         }
 
         return ResponseEntity.ok().body(facturasDto);

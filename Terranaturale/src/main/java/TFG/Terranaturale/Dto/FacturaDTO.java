@@ -7,7 +7,7 @@ import java.time.Instant;
 
 @Getter
 @Setter
-public class FacturaDto {
+public class FacturaDTO {
     private Integer id;
 
     private Instant fecha;
