@@ -1,6 +1,7 @@
 package TFG.Terranaturale.Controller;
 
 import TFG.Terranaturale.Dto.ImageneDTO;
+import TFG.Terranaturale.Dto.UsuarioDTO;
 import TFG.Terranaturale.Service.ImageneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,21 @@ public class ImageneController {
     @GetMapping("/{id}")
     public ResponseEntity<ImageneDTO> getImageneById(@PathVariable Integer id) {
         return imageneService.getImageneById(id);
+    }
+
+    @PostMapping("/cliente")
+    public ResponseEntity<List<ImageneDTO>> getAllImageneByCliente(@RequestBody UsuarioDTO UsuarioDto) {
+        return imageneService.getImageneByClientId(UsuarioDto);
+    }
+
+    @GetMapping("/invitado")
+    public ResponseEntity<List<ImageneDTO>> getAllImageneByInvitado() {
+        return imageneService.getImageneByInvitado();
+    }
+
+    @PostMapping
+    public void insertImagene(@RequestBody ImageneDTO imagenDTO) {
+        imageneService.createImagene(imagenDTO);
     }
 }
 

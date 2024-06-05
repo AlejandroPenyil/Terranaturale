@@ -10,9 +10,10 @@
 	</parent>
 	<groupId>TFG</groupId>
 	<artifactId>terranaturale</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>Terranaturale</name>
-	<description>Demo project for Spring Boot</description>
+	<packaging>war</packaging>
+	<description>Api Alejandro Peñil TFG</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

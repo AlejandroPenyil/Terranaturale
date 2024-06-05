@@ -10,5 +10,6 @@ public class ImageneDTO {
     private String fecha;
     private String ubicacion;
     private Integer idJardin;
+    private Integer idUsuario;
 }
 

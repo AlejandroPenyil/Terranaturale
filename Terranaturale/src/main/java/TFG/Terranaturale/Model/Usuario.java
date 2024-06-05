@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "usuarios")
-public class Usuario implements UserDetails {
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -22,6 +22,9 @@ public class Usuario implements UserDetails {
 
     @Column(name = "Nombre", nullable = false, length = 100)
     private String nombre;
+
+    @Column(name = "Apellidos", nullable = false, length = 100)
+    private String apellidos;
 
     @Column(name = "`Contraseña`", nullable = false, length = 100)
     private String contraseña;
@@ -45,38 +48,5 @@ public class Usuario implements UserDetails {
     @Column(name = "user_name", nullable = false, length = 100)
     private String userName;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(rol));
-    }
 
-    @Override
-    public String getPassword() {
-        return contraseña;
-    }
-
-    @Override
-    public String getUsername() {
-        return userName;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

@@ -26,4 +26,7 @@ public class Imagene {
     @JoinColumn(name = "id_jardin", nullable = false)
     private Jardine idJardin;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario idUsuario;
 }

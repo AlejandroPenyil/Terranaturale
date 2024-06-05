@@ -1,8 +1,12 @@
 package TFG.Terranaturale.Controller;
 
+import TFG.Terranaturale.Dto.LoginRequest;
 import TFG.Terranaturale.Dto.UsuarioDTO;
+import TFG.Terranaturale.Exception.InvalidCredentialsException;
+import TFG.Terranaturale.Exception.ResourceNotFoundException;
 import TFG.Terranaturale.Model.Usuario;
 import TFG.Terranaturale.Service.UsuarioService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -59,5 +63,15 @@ public class UsuarioController {
     public ResponseEntity<Void> deleteUsuario(@PathVariable Integer id) {
         usuarioService.deleteUsuario(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        try {
+            UsuarioDTO usuarioDTO = usuarioService.login(loginRequest.getUserName(), loginRequest.getContraseña());
+            return ResponseEntity.ok(usuarioDTO);
+        } catch (ResourceNotFoundException | InvalidCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
     }
 }

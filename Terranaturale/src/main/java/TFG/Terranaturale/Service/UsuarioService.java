@@ -1,6 +1,8 @@
 package TFG.Terranaturale.Service;
 
 import TFG.Terranaturale.Dto.UsuarioDTO;
+import TFG.Terranaturale.Exception.InvalidCredentialsException;
+import TFG.Terranaturale.Exception.ResourceNotFoundException;
 import TFG.Terranaturale.Model.Usuario;
 import TFG.Terranaturale.Repository.UsuarioRepository;
 import org.modelmapper.ModelMapper;
@@ -67,5 +69,16 @@ public class UsuarioService {
 
     public void deleteUsuario(Integer id) {
         usuarioRepository.deleteById(id);
+    }
+
+    public UsuarioDTO login(String userName, String contraseña) {
+        Usuario usuario = usuarioRepository.findByUserName(userName)
+                .orElseThrow(() -> new ResourceNotFoundException("Nombre de usuario no encontrado"));
+
+        if (!passwordEncoder.matches(contraseña, usuario.getContraseña())) {
+            throw new InvalidCredentialsException("Contraseña incorrecta");
+        }
+
+        return modelMapper.map(usuario, UsuarioDTO.class);
     }
 }
