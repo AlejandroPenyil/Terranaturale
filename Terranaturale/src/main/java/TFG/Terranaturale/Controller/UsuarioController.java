@@ -52,6 +52,7 @@ public class UsuarioController {
             usuario.setRol(usuarioDetails.getRol());
             usuario.setTelefono(usuarioDetails.getTelefono());
             usuario.setDireccion(usuarioDetails.getDireccion());
+            usuario.setApellidos(usuarioDetails.getApellidos());
             usuarioService.createOrUpdateUsuario(usuario);
             return ResponseEntity.ok(usuario);
         } else {
